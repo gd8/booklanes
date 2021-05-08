@@ -11,3 +11,49 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.book-card {
+  width: 50%;
+}
+
+.book-header {
+  border-bottom: 1px solid gray;
+  text-align: center;
+  padding-bottom: 5px;
+}
+
+.book-column {
+  border-right: 1px solid gray;
+  height: 100vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .book-column {
+    height: 100%;
+    min-height: 200px;
+  }
+  .book-card {
+    width: 100%;
+  }
+}
+
+.book-column:last-child {
+  border-right: none;
+}
+
+.is-draggable {
+  cursor: grab;
+}
+
+.modal-card {
+  width: 500px;
+}
+
+.modal-card-foot {
+  justify-content: space-between;
+}
+
+.book-card-footer {
+  justify-content: flex-end;
+  padding: 10px;
+}
