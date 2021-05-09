@@ -5,7 +5,8 @@ export class BookForm extends Component {
     super(props);
     const title = this.props.book?.title || '';
     const author = this.props.book?.author || '';
-    this.state = { title, author };
+    const notes = this.props.book?.notes || '';
+    this.state = { title, author, notes };
   }
 
   onChange(event) {
@@ -16,8 +17,9 @@ export class BookForm extends Component {
     event.preventDefault();
     const author = this.state.author;
     const title = this.state.title;
-    this.props.onSubmit({ author, title });
-    this.setState({ title: '', author: '' });
+    const notes = this.state.notes;
+    this.props.onSubmit({ author, title, notes });
+    this.setState({ title: '', author: '', notes: '' });
   }
 
   cancel(event) {
@@ -28,8 +30,8 @@ export class BookForm extends Component {
   render() {
     const title = this.props.title || 'Enter Book';
     return (
-      <div className='card book-card '>
-        <header className='card-header'>
+      <div className='card book-card'>
+        <header className='card-header has-background-primary'>
           <p className='card-header-title'>{title}</p>
         </header>
         <div className='card-content'>
@@ -40,7 +42,7 @@ export class BookForm extends Component {
                 <input
                   type='text'
                   name='title'
-                  className='input'
+                  className='input is-primary'
                   value={this.state.title}
                   onChange={this.onChange.bind(this)}
                 />
@@ -51,8 +53,19 @@ export class BookForm extends Component {
               <input
                 type='text'
                 name='author'
-                className='input'
+                className='input is-primary'
                 value={this.state.author}
+                onChange={this.onChange.bind(this)}
+              />
+            </div>
+            <div className='field'>
+              <label className='label'>Notes</label>
+              <textarea
+                type='text'
+                name='notes'
+                className='textarea is-primary'
+                rows='3'
+                value={this.state.notes}
                 onChange={this.onChange.bind(this)}
               />
             </div>
