@@ -24,7 +24,12 @@ export default class App extends Component {
   onNewBookSubmit(form) {
     const newBooks = [
       ...this.state.books,
-      { ...form, status: 0, id: this.state.books.length },
+      {
+        ...form,
+        status: 0,
+        id: String(this.state.books.length),
+        order: this.state.books.length,
+      },
     ];
     this.saveBooks(newBooks);
   }

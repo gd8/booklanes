@@ -43,6 +43,10 @@ code {
   border-right: none;
 }
 
+.book-column-droppable {
+  height: 100%;
+}
+
 .is-draggable {
   cursor: grab;
 }
