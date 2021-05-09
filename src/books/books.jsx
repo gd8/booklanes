@@ -41,15 +41,6 @@ export class Books extends Component {
           >
             <span className='title has-text-weight-bold'>{book.title} </span>
             <span className='subtitle'>{book.author} </span>
-            <span className='icon'>
-              <i className='fas fa-star'></i>
-            </span>
-            <span className='icon'>
-              <i className='fas fa-star'></i>
-            </span>
-            <span className='icon'>
-              <i className='fas fa-star'></i>
-            </span>
           </li>
         );
       });
