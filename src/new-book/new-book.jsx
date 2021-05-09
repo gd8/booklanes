@@ -18,10 +18,12 @@ export class NewBook extends Component {
       return <Redirect to={this.state.redirect} />;
     }
     return (
-      <BookForm
-        onSubmit={this.onNewBookSubmit.bind(this)}
-        cancel={() => this.setState({ redirect: 'books' })}
-      />
+      <section className='section'>
+        <BookForm
+          onSubmit={this.onNewBookSubmit.bind(this)}
+          cancel={() => this.setState({ redirect: 'books' })}
+        />
+      </section>
     );
   }
 }

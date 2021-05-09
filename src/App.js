@@ -52,21 +52,24 @@ export default class App extends Component {
   render() {
     return (
       <Router>
+        <nav className='navbar has-background-primary-light'>
+          <div className='container'>
+            <div className='navbar-menu'>
+              <ul className='navbar-start'>
+                <li className='navbar-item'>
+                  <Link to='/'>Home</Link>
+                </li>
+                <li className='navbar-item'>
+                  <Link to='/books'>Books</Link>
+                </li>
+                <li className='navbar-item'>
+                  <Link to='/new'>New Book</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
         <div className='container'>
-          <nav className='navbar'>
-            <ul className='navbar-start'>
-              <li className='navbar-item'>
-                <Link to='/'>Home</Link>
-              </li>
-              <li className='navbar-item'>
-                <Link to='/new'>New Book</Link>
-              </li>
-              <li className='navbar-item'>
-                <Link to='/books'>Books</Link>
-              </li>
-            </ul>
-          </nav>
-
           <Switch>
             <Route path='/new'>
               <NewBook onNewBookSubmit={this.onNewBookSubmit.bind(this)} />
@@ -107,5 +110,9 @@ export default class App extends Component {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <section className='section'>
+      <h2>Home</h2>
+    </section>
+  );
 }
