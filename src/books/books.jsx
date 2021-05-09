@@ -15,35 +15,27 @@ export class Books extends Component {
     if (!destination) {
       return;
     }
-    const droppedBook = this.props.books.find(
+    const droppedBook = this.props.books[source.droppableId].find(
       (book) => String(book.id) === draggableId
     );
     if (source.droppableId !== destination.droppableId) {
-      this.props.updateBook({
-        ...droppedBook,
-        status: destination.droppableId,
-        order: destination.index,
-      });
+      this.props.moveBook(
+        droppedBook,
+        source.droppableId,
+        destination.droppableId,
+        destination.index
+      );
     } else {
-      this.props.updateBook({
-        ...droppedBook,
-        order: destination.index,
-      });
+      this.props.reorderBook(droppedBook, destination.index);
     }
   }
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
-    const booksToRead = this.props.books
-      .filter((book) => String(book.status) === String(0))
-      .sort((bookA, bookB) => (bookA.order >= bookB.order ? 1 : -1));
-    const booksReading = this.props.books
-      .filter((book) => String(book.status) === String(1))
-      .sort((bookA, bookB) => (bookA.order >= bookB.order ? 1 : -1));
-    const booksRead = this.props.books
-      .filter((book) => String(book.status) === String(2))
-      .sort((bookA, bookB) => (bookA.order >= bookB.order ? 1 : -1));
+    const booksToRead = this.props.books[0] || [];
+    const booksReading = this.props.books[1] || [];
+    const booksRead = this.props.books[2] || [];
     const formatBooks = (books) =>
       books.map((book, index) => {
         return (

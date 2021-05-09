@@ -22,28 +22,58 @@ export default class App extends Component {
   }
 
   onNewBookSubmit(form) {
-    const newBooks = [
+    const newBooks = {
       ...this.state.books,
-      {
-        ...form,
-        status: 0,
-        id: String(this.state.books.length),
-        order: this.state.books.length,
-      },
-    ];
+      0: [
+        ...(this.state.books[0] || []),
+        {
+          ...form,
+          status: 0,
+          id: String(this.state.books?.[0]?.length || 0),
+        },
+      ],
+    };
     this.saveBooks(newBooks);
   }
 
   updateBook(updatedBook) {
-    const updatedBooks = this.state.books.map((book) => {
-      if (updatedBook.id === book.id) {
-        return {
-          ...book,
-          ...updatedBook,
-        };
-      }
-      return book;
-    });
+    const updatedBooks = {
+      ...this.state.books,
+      [updatedBook.status]: this.state.books[updatedBook.status].map((book) => {
+        if (updatedBook.id === book.id) {
+          return {
+            ...book,
+            ...updatedBook,
+          };
+        }
+        return book;
+      }),
+    };
+    this.saveBooks(updatedBooks);
+  }
+
+  moveBook(movedBook, from, to, index) {
+    movedBook = { ...movedBook, status: to };
+    const updatedBooks = {
+      ...this.state.books,
+      [from]: this.state.books[from].filter((book) => book.id !== movedBook.id),
+      [to]: (this.state.books[to] || []).concat(movedBook),
+    };
+    this.saveBooks(updatedBooks);
+  }
+
+  reorderBook(reorderedBook, index) {
+    const books = this.state.books[reorderedBook.status].filter(
+      (book) => book.id !== reorderedBook.id
+    );
+    const updatedBooks = {
+      ...this.state.books,
+      [reorderedBook.status]: [
+        ...books.slice(0, index),
+        reorderedBook,
+        ...books.slice(index),
+      ],
+    };
     this.saveBooks(updatedBooks);
   }
 
@@ -83,6 +113,8 @@ export default class App extends Component {
               <Books
                 books={this.state.books}
                 updateBook={this.updateBook.bind(this)}
+                moveBook={this.moveBook.bind(this)}
+                reorderBook={this.reorderBook.bind(this)}
               />
             </Route>
             <Route
