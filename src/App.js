@@ -57,7 +57,11 @@ export default class App extends Component {
     const updatedBooks = {
       ...this.state.books,
       [from]: this.state.books[from].filter((book) => book.id !== movedBook.id),
-      [to]: (this.state.books[to] || []).concat(movedBook),
+      [to]: [
+        ...this.state.books[to].slice(0, index),
+        movedBook,
+        ...this.state.books[to].slice(index),
+      ],
     };
     this.saveBooks(updatedBooks);
   }
@@ -121,9 +125,9 @@ export default class App extends Component {
               path='/books/:id'
               render={(props) => {
                 const bookId = props.match.params.id;
-                const book = this.state.books.find(
-                  (book) => String(book.id) === String(bookId)
-                );
+                const book = Object.values(this.state.books)
+                  .reduce((booksA, booksB) => [...booksA, ...booksB])
+                  .find((book) => String(book.id) === String(bookId));
                 return book ? (
                   <BookDetail
                     book={book}
