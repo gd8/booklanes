@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { BookCard } from './book-card';
 
 export class Books extends Component {
   constructor(props) {
@@ -41,17 +42,12 @@ export class Books extends Component {
         return (
           <Draggable key={book.id} draggableId={String(book.id)} index={index}>
             {(provided, snapshot) => (
-              <div
-                className='box is-draggable has-background-primary'
-                ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-              >
-                <li onDoubleClick={this.onDoubleClick.bind(this, book)}>
-                  <p className='title has-text-weight-bold'>{book.title}</p>
-                  <p className='subtitle'>{book.author} </p>
-                </li>
-              </div>
+              <BookCard
+                provided={provided}
+                book={book}
+                isDragging={snapshot.isDragging}
+                onDoubleClick={this.onDoubleClick.bind(this, book)}
+              />
             )}
           </Draggable>
         );
