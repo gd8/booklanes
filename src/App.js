@@ -82,9 +82,14 @@ export default class App extends Component {
   }
 
   deleteBook(bookToDelete) {
-    const updatedBooks = this.state.books.filter((book) => {
-      return book.id !== bookToDelete.id;
-    });
+    const updatedBooks = {
+      ...this.state.books,
+      [bookToDelete.status]: this.state.books[bookToDelete.status].filter(
+        (book) => {
+          return book.id !== bookToDelete.id;
+        }
+      ),
+    };
     this.saveBooks(updatedBooks);
   }
 
