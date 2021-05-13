@@ -29,7 +29,7 @@ export default class App extends Component {
         {
           ...form,
           status: 0,
-          id: String(this.state.books?.[0]?.length || 0),
+          id: new Date().getTime(),
         },
       ],
     };
@@ -96,18 +96,30 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <nav className='navbar has-background-primary-light'>
+        <nav className='navbar is-primary'>
           <div className='container'>
-            <div className='navbar-menu'>
+            <div className='navbar-brand is-active'>
               <ul className='navbar-start'>
                 <li className='navbar-item'>
-                  <Link to='/'>Home</Link>
+                  <Link to='/' className='is-capitalized has-text-weight-bold'>
+                    Home
+                  </Link>
                 </li>
                 <li className='navbar-item'>
-                  <Link to='/books'>Books</Link>
+                  <Link
+                    to='/books'
+                    className='is-capitalized has-text-weight-bold'
+                  >
+                    Books
+                  </Link>
                 </li>
                 <li className='navbar-item'>
-                  <Link to='/new'>New Book</Link>
+                  <Link
+                    to='/new'
+                    className='is-capitalized has-text-weight-bold'
+                  >
+                    New Book
+                  </Link>
                 </li>
               </ul>
             </div>

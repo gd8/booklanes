@@ -67,3 +67,11 @@ code {
 .notes {
   white-space: pre;
 }
+
+.navbar-item > a {
+  color: white;
+}
+
+.navbar-item:hover {
+  background-color: hsl(171, 100%, 29%);
+}
