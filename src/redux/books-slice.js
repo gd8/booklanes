@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const booksSlice = createSlice({
   name: 'books',
@@ -79,21 +79,3 @@ export const {
 } = booksSlice.actions;
 
 export default booksSlice.reducer;
-
-const isBookAction = isAnyOf(
-  addBook,
-  editBook,
-  deleteBook,
-  moveBook,
-  reorderBook,
-  initBooks
-);
-
-export const localStoragePersistMiddleware = (store) => (next) => (action) => {
-  const response = next(action);
-  if (isBookAction(action)) {
-    const books = store.getState().books;
-    localStorage.setItem('books', JSON.stringify(books.statuses));
-  }
-  return response;
-};
