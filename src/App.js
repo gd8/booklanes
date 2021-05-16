@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BookDetail } from './book-detail/book-detail';
 import { Books } from './books/books';
 import { NewBook } from './new-book/new-book';
@@ -13,6 +13,7 @@ import {
   reorderBook,
 } from './reducers/books-slice';
 import { NotFound } from './shared/not-found';
+import { Navbar } from './navbar/navbar';
 
 class App extends Component {
   constructor(props) {
@@ -47,35 +48,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <nav className='navbar is-primary'>
-          <div className='container'>
-            <div className='navbar-brand is-active'>
-              <ul className='navbar-start'>
-                <li className='navbar-item'>
-                  <Link to='/' className='is-capitalized has-text-weight-bold'>
-                    Home
-                  </Link>
-                </li>
-                <li className='navbar-item'>
-                  <Link
-                    to='/books'
-                    className='is-capitalized has-text-weight-bold'
-                  >
-                    Books
-                  </Link>
-                </li>
-                <li className='navbar-item'>
-                  <Link
-                    to='/new'
-                    className='is-capitalized has-text-weight-bold'
-                  >
-                    New Book
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
+        <Navbar />
         <div className='container'>
           <Switch>
             <Route path='/new'>

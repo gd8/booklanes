@@ -1,0 +1,9 @@
+@import '../shared/variables.scss';
+
+.navbar-item > a {
+  color: $white;
+}
+
+.navbar-item:hover {
+  background-color: $primary-dark;
+}

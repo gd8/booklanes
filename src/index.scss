@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import './shared/shared.scss';
+@import './books/books.scss';
+@import './book-detail/book-detail.scss';
+@import './navbar/navbar.scss';
+@import './shared/confirm-modal.scss';
+
+$family-sans-serif: 'Nunito', sans-serif;
+
+@import '../node_modules/bulma/bulma.sass';
