@@ -16,7 +16,8 @@ export const booksSlice = createSlice({
     },
     addBook: (state, action) => {
       const newBook = action.payload;
-      state.statuses[newBook.status].push({
+      const newStatus = 0;
+      state.statuses[newStatus].push({
         ...newBook,
         status: 0,
         id: new Date().getTime(),
