@@ -3,8 +3,15 @@
 @import './books/books.scss';
 @import './book-detail/book-detail.scss';
 @import './navbar/navbar.scss';
+
 @import './shared/confirm-modal.scss';
 
 $family-sans-serif: 'Nunito', sans-serif;
 
-@import '../node_modules/bulma/bulma.sass';
+@import '../node_modules/bulma/sass/utilities/_all.sass';
+@import '../node_modules/bulma/sass/base/_all.sass';
+@import '../node_modules/bulma/sass/elements/button.sass';
+@import '../node_modules/bulma/sass/elements/container.sass';
+@import '../node_modules/bulma/sass/elements/title.sass';
+@import '../node_modules/bulma/sass/form/_all.sass';
+@import '../node_modules/bulma/sass/layout/section.sass';
