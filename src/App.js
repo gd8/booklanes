@@ -1,96 +1,47 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { NewBook } from './new-book/new-book';
-import { Books } from './books/books';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import { BookDetail } from './book-detail/book-detail';
+import { Books } from './books/books';
+import { NewBook } from './new-book/new-book';
+import {
+  addBook,
+  deleteBook,
+  editBook,
+  initBooks,
+  moveBook,
+  reorderBook,
+} from './reducers/books-slice';
 import { NotFound } from './shared/not-found';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     const storedBooks = localStorage.getItem('books');
     this.state = {
-      books: storedBooks ? JSON.parse(storedBooks) : [],
+      books: storedBooks ? JSON.parse(storedBooks) : {},
     };
-  }
-
-  saveBooks(books) {
-    this.setState({
-      books,
-    });
-    localStorage.setItem('books', JSON.stringify(books));
+    this.props.initBooks(storedBooks ? JSON.parse(storedBooks) : {});
   }
 
   onNewBookSubmit(form) {
-    const newBooks = {
-      ...this.state.books,
-      0: [
-        ...(this.state.books[0] || []),
-        {
-          ...form,
-          status: 0,
-          id: new Date().getTime(),
-        },
-      ],
-    };
-    this.saveBooks(newBooks);
+    this.props.addBook(form);
   }
 
   updateBook(updatedBook) {
-    const updatedBooks = {
-      ...this.state.books,
-      [updatedBook.status]: this.state.books[updatedBook.status].map((book) => {
-        if (updatedBook.id === book.id) {
-          return {
-            ...book,
-            ...updatedBook,
-          };
-        }
-        return book;
-      }),
-    };
-    this.saveBooks(updatedBooks);
+    this.props.editBook(updatedBook);
   }
 
-  moveBook(movedBook, from, to, index) {
-    movedBook = { ...movedBook, status: to };
-    const updatedBooks = {
-      ...this.state.books,
-      [from]: this.state.books[from].filter((book) => book.id !== movedBook.id),
-      [to]: [
-        ...this.state.books[to].slice(0, index),
-        movedBook,
-        ...this.state.books[to].slice(index),
-      ],
-    };
-    this.saveBooks(updatedBooks);
+  moveBook(book, from, to, index) {
+    this.props.moveBook({ book, from, to, index });
   }
 
-  reorderBook(reorderedBook, index) {
-    const books = this.state.books[reorderedBook.status].filter(
-      (book) => book.id !== reorderedBook.id
-    );
-    const updatedBooks = {
-      ...this.state.books,
-      [reorderedBook.status]: [
-        ...books.slice(0, index),
-        reorderedBook,
-        ...books.slice(index),
-      ],
-    };
-    this.saveBooks(updatedBooks);
+  reorderBook(book, index) {
+    this.props.reorderBook({ book, index });
   }
 
   deleteBook(bookToDelete) {
-    const updatedBooks = {
-      ...this.state.books,
-      [bookToDelete.status]: this.state.books[bookToDelete.status].filter(
-        (book) => {
-          return book.id !== bookToDelete.id;
-        }
-      ),
-    };
-    this.saveBooks(updatedBooks);
+    this.props.deleteBook(bookToDelete);
   }
 
   render() {
@@ -132,7 +83,7 @@ export default class App extends Component {
             </Route>
             <Route exact path='/books'>
               <Books
-                books={this.state.books}
+                books={this.props.books}
                 updateBook={this.updateBook.bind(this)}
                 moveBook={this.moveBook.bind(this)}
                 reorderBook={this.reorderBook.bind(this)}
@@ -142,7 +93,7 @@ export default class App extends Component {
               path='/books/:id'
               render={(props) => {
                 const bookId = props.match.params.id;
-                const book = Object.values(this.state.books)
+                const book = Object.values(this.props.books)
                   .reduce((booksA, booksB) => [...booksA, ...booksB])
                   .find((book) => String(book.id) === String(bookId));
                 return book ? (
@@ -174,3 +125,18 @@ function Home() {
     </section>
   );
 }
+
+const mapDispatchToProps = {
+  addBook,
+  editBook,
+  deleteBook,
+  moveBook,
+  reorderBook,
+  initBooks,
+};
+
+const mapStateToProps = (state) => ({
+  books: state.books.statuses,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
