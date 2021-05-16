@@ -4,7 +4,7 @@ export const Navbar = () => {
   return (
     <nav className='navbar is-primary'>
       <div className='container'>
-        <div className='navbar-brand is-active'>
+        <div className='navbar-brand'>
           <ul className='navbar-start'>
             <li className='navbar-item'>
               <Link to='/' className='is-capitalized has-text-weight-bold'>

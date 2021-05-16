@@ -1,4 +1,5 @@
 @import '../shared/variables.scss';
+@import '../../node_modules/bulma/sass/components/navbar.sass';
 
 .navbar-item > a {
   color: $white;
@@ -6,4 +7,14 @@
 
 .navbar-item:hover {
   background-color: $primary-dark;
+}
+
+@media only screen and (max-width: $mobile) {
+  .navbar-brand {
+    display: block;
+  }
+  .navbar-item > a {
+    width: 100%;
+    text-align: center;
+  }
 }
