@@ -11,7 +11,7 @@ import {
   initBooks,
   moveBook,
   reorderBook,
-} from './reducers/books-slice';
+} from './redux/books-slice';
 import { NotFound } from './shared/not-found';
 import { Navbar } from './navbar/navbar';
 
