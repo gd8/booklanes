@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { BookForm } from '../shared/book-form';
-import { ConfirmModal } from '../shared/confirm-modal';
+import { BookForm } from '../../shared/components/book-form';
+import { ConfirmModal } from '../../shared/confirm-modal';
 
 export class BookDetail extends Component {
   constructor(props) {
