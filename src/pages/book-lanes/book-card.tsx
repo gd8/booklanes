@@ -1,3 +1,5 @@
+import { useHistory } from 'react-router';
+
 const getStyle = (provided, isDragging) => {
   if (isDragging) {
     return {
@@ -9,7 +11,8 @@ const getStyle = (provided, isDragging) => {
 };
 
 export const BookCard = (props) => {
-  const { provided, book, isDragging, onDoubleClick } = props;
+  const { provided, book, isDragging } = props;
+  const history = useHistory();
   return (
     <div
       className='box is-draggable has-background-primary'
@@ -18,7 +21,7 @@ export const BookCard = (props) => {
       {...provided.dragHandleProps}
       style={getStyle(provided, isDragging)}
     >
-      <li onDoubleClick={() => onDoubleClick(book)}>
+      <li onDoubleClick={() => history.push(`/books/${book.id}`)}>
         <p className='title has-text-weight-bold'>{book.title}</p>
         <p className='subtitle'>{book.author} </p>
       </li>

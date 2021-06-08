@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BookDetail } from './book-detail/book-detail';
-import { Books } from './books/books';
+import { Navbar } from './navbar/navbar';
 import { NewBook } from './new-book/new-book';
+import { BookLanes } from './pages/book-lanes/book-lanes';
 import {
   addBook,
   deleteBook,
@@ -13,16 +14,15 @@ import {
   reorderBook,
 } from './redux/books-slice';
 import { NotFound } from './shared/not-found';
-import { Navbar } from './navbar/navbar';
 
-class App extends Component {
+export class App extends Component<any, any> {
   constructor(props) {
     super(props);
-    const storedBooks = localStorage.getItem('books');
-    this.state = {
-      books: storedBooks ? JSON.parse(storedBooks) : {},
-    };
-    this.props.initBooks(storedBooks ? JSON.parse(storedBooks) : {});
+    let storedBooks = {};
+    try {
+      storedBooks = JSON.parse(localStorage.getItem('books'));
+    } catch {}
+    this.props.initBooks(storedBooks ? storedBooks : {});
   }
 
   onNewBookSubmit(form) {
@@ -55,8 +55,8 @@ class App extends Component {
               <NewBook onNewBookSubmit={this.onNewBookSubmit.bind(this)} />
             </Route>
             <Route exact path='/books'>
-              <Books
-                books={this.props.books}
+              <BookLanes
+                books={this.props.booksByLane}
                 updateBook={this.updateBook.bind(this)}
                 moveBook={this.moveBook.bind(this)}
                 reorderBook={this.reorderBook.bind(this)}
@@ -66,7 +66,7 @@ class App extends Component {
               path='/books/:id'
               render={(props) => {
                 const bookId = props.match.params.id;
-                const book = Object.values(this.props.books)
+                const book = (Object.values(this.props.booksByLane) as any)
                   .reduce((booksA, booksB) => [...booksA, ...booksB])
                   .find((book) => String(book.id) === String(bookId));
                 return book ? (
@@ -109,7 +109,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  books: state.books.statuses,
+  booksByLane: state.books.booksByLane,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
