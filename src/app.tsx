@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { BookDetail } from './book-detail/book-detail';
-import { Navbar } from './navbar/navbar';
-import { NewBook } from './new-book/new-book';
+import { BookDetail } from './pages/book-detail/book-detail';
+import { Navbar } from './shared/components/navbar/navbar';
+import { NewBook } from './pages/new-book/new-book';
 import { BookLanes } from './pages/book-lanes/book-lanes';
 import {
   addBook,
@@ -13,7 +13,7 @@ import {
   moveBook,
   reorderBook,
 } from './redux/books-slice';
-import { NotFound } from './shared/not-found';
+import { NotFound } from './shared/components/not-found';
 
 export class App extends Component<any, any> {
   constructor(props) {
