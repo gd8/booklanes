@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { BookForm } from '../shared/book-form';
+import { BookForm } from '../../shared/components/book-form';
 
 export class NewBook extends Component {
   constructor(props) {
