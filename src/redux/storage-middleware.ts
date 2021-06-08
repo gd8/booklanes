@@ -21,7 +21,7 @@ export const localStoragePersistMiddleware = (store) => (next) => (action) => {
   const response = next(action);
   if (isBookAction(action)) {
     const books = store.getState().books;
-    localStorage.setItem('books', JSON.stringify(books.statuses));
+    localStorage.setItem('books', JSON.stringify(books.booksByLane));
   }
   return response;
 };

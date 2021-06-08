@@ -1,31 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Lanes } from '../shared/lanes';
 
-export const booksSlice = createSlice({
+export type BooksByLane = {[id: string]: any[]};
+
+export const InitialBooksByLane: BooksByLane = Lanes.reduce((booksByLane, lane) => {
+  booksByLane[lane.id] = [];
+  return booksByLane;
+}, {});
+
+const booksSlice = createSlice({
   name: 'books',
   initialState: {
-    statuses: { 0: [], 1: [], 2: [] },
+    booksByLane: InitialBooksByLane,
   },
   reducers: {
     initBooks: (state, action) => {
       const storedBooks = action.payload;
-      state.statuses = {
-        0: storedBooks[0] || [],
-        1: storedBooks[1] || [],
-        2: storedBooks[2] || [],
-      };
+      state.booksByLane = Lanes.reduce((booksByLane, lane) => {
+        booksByLane[lane.id] = storedBooks[lane.id] || [];
+        return booksByLane;
+      }, {});
     },
     addBook: (state, action) => {
       const newBook = action.payload;
-      const newStatus = 0;
-      state.statuses[newStatus].push({
+      const newStatus = '0';
+      state.booksByLane[newStatus].push({
         ...newBook,
-        status: 0,
+        status: '0',
         id: new Date().getTime(),
       });
     },
     editBook: (state, action) => {
       const editedBook = action.payload;
-      state.statuses[editedBook.status] = state.statuses[editedBook.status].map(
+      state.booksByLane[editedBook.status] = state.booksByLane[editedBook.status].map(
         (book) => {
           if (book.id === editedBook.id) {
             return {
@@ -39,7 +46,7 @@ export const booksSlice = createSlice({
     },
     deleteBook: (state, action) => {
       const bookToDelete = action.payload;
-      state.statuses[bookToDelete.status] = state.statuses[
+      state.booksByLane[bookToDelete.status] = state.booksByLane[
         bookToDelete.status
       ].filter((book) => {
         return book.id !== bookToDelete.id;
@@ -48,19 +55,19 @@ export const booksSlice = createSlice({
     moveBook: (state, action) => {
       const { book, from, to, index } = action.payload;
       const movedBook = { ...book, status: to };
-      state.statuses[from] = state.statuses[from].filter(
+      state.booksByLane[from] = state.booksByLane[from].filter(
         (book) => book.id !== movedBook.id
       );
-      state.statuses[to] = [
-        ...state.statuses[to].slice(0, index),
+      state.booksByLane[to] = [
+        ...state.booksByLane[to].slice(0, index),
         movedBook,
-        ...state.statuses[to].slice(index),
+        ...state.booksByLane[to].slice(index),
       ];
     },
     reorderBook: (state, action) => {
       const { book, index } = action.payload;
-      const books = state.statuses[book.status].filter((b) => b.id !== book.id);
-      state.statuses[book.status] = [
+      const books = state.booksByLane[book.status].filter((b) => b.id !== book.id);
+      state.booksByLane[book.status] = [
         ...books.slice(0, index),
         book,
         ...books.slice(index),
