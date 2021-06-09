@@ -2,17 +2,10 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { BookDetail } from './pages/book-detail/book-detail';
+import BookLanes from './pages/book-lanes/book-lanes';
+import NewBook from './pages/new-book/new-book';
+import { deleteBook, editBook, initBooks } from './redux/books-slice';
 import { Navbar } from './shared/components/navbar/navbar';
-import { NewBook } from './pages/new-book/new-book';
-import { BookLanes } from './pages/book-lanes/book-lanes';
-import {
-  addBook,
-  deleteBook,
-  editBook,
-  initBooks,
-  moveBook,
-  reorderBook,
-} from './redux/books-slice';
 import { NotFound } from './shared/components/not-found';
 
 export class App extends Component<any, any> {
@@ -25,20 +18,8 @@ export class App extends Component<any, any> {
     this.props.initBooks(storedBooks ? storedBooks : {});
   }
 
-  onNewBookSubmit(form) {
-    this.props.addBook(form);
-  }
-
   updateBook(updatedBook) {
     this.props.editBook(updatedBook);
-  }
-
-  moveBook(book, from, to, index) {
-    this.props.moveBook({ book, from, to, index });
-  }
-
-  reorderBook(book, index) {
-    this.props.reorderBook({ book, index });
   }
 
   deleteBook(bookToDelete) {
@@ -52,15 +33,10 @@ export class App extends Component<any, any> {
         <div className='container'>
           <Switch>
             <Route path='/new'>
-              <NewBook onNewBookSubmit={this.onNewBookSubmit.bind(this)} />
+              <NewBook />
             </Route>
             <Route exact path='/books'>
-              <BookLanes
-                books={this.props.booksByLane}
-                updateBook={this.updateBook.bind(this)}
-                moveBook={this.moveBook.bind(this)}
-                reorderBook={this.reorderBook.bind(this)}
-              />
+              <BookLanes />
             </Route>
             <Route
               path='/books/:id'
@@ -100,11 +76,8 @@ function Home() {
 }
 
 const mapDispatchToProps = {
-  addBook,
   editBook,
   deleteBook,
-  moveBook,
-  reorderBook,
   initBooks,
 };
 
