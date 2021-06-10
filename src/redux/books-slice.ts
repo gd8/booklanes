@@ -15,7 +15,12 @@ const booksSlice = createSlice({
   },
   reducers: {
     initBooks: (state, action) => {
-      const storedBooks = action.payload;
+      let storedBooks = {};
+      try {
+        storedBooks = JSON.parse(localStorage.getItem('books')) || {};
+      } catch {
+        storedBooks = {};
+      }
       state.booksByLane = Lanes.reduce((booksByLane, lane) => {
         booksByLane[lane.id] = storedBooks[lane.id] || [];
         return booksByLane;
