@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
-@import './shared/shared.scss';
-@import './pages/book-lanes/book-lanes.scss';
-@import './pages/book-detail/book-detail.scss';
+@import '../node_modules/bulma/css/bulma.min.css';
 
 $family-sans-serif: 'Nunito', sans-serif;
 
@@ -13,3 +11,7 @@ $family-sans-serif: 'Nunito', sans-serif;
 @import '../node_modules/bulma/sass/form/_all.sass';
 @import '../node_modules/bulma/sass/layout/section.sass';
 @import '../node_modules/bulma/sass/components/navbar.sass';
+
+@import './shared/shared.scss';
+@import './pages/book-lanes/book-lanes.scss';
+@import './pages/book-detail/book-detail.scss';
