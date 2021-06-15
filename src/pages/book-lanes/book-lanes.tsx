@@ -2,9 +2,10 @@ import { Component } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { Lanes } from '../../shared/lanes';
-import { BookLane } from './book-lane';
-import { BookStatus } from './book-lanes.interface';
 import { moveBook, reorderBook } from './../../redux/books-slice';
+import { BookLane } from './book-lane';
+import { BookLanesActions } from './book-lanes-actions';
+import { BookStatus } from './book-lanes.interface';
 
 export interface BookLanesProps {
   booksByLane: any;
@@ -37,9 +38,14 @@ class BookLanes extends Component<BookLanesProps> {
     }
   }
 
+  updateLanes(event) {
+    console.log(event);
+  }
+
   render() {
     return (
       <section className='section'>
+        <BookLanesActions updateLanes={this.updateLanes.bind(this)} />
         <DragDropContext onDragEnd={this.onDragEnd}>
           <div className='columns'>
             {Lanes.map((status: BookStatus) => {
